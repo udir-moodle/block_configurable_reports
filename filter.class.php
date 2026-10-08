@@ -17,33 +17,27 @@
 /**
  * Configurable Reports a Moodle block for creating customizable reports
  *
- * @copyright  2020 Juan Leyva <juan@moodle.com>
- * @package   block_configurable_reports
- * @author    Juan leyva <http://www.twitter.com/jleyvadelgado>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    block_configurable_reports
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
-
-require_once($CFG->libdir . '/formslib.php');
+require_once($CFG->dirroot . '/blocks/configurable_reports/plugin.class.php');
 
 /**
- * Class average_form
+ * Class plugin_base
  *
  * @package   block_configurable_reports
- * @author    Juan leyva <http://www.twitter.com/jleyvadelgado>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class average_form extends moodleform {
-
+abstract class filter_base extends plugin_base {
     /**
-     * Form definition
+     * Execute filter, return the modified sql and paramaters.
+     *
+     * @param string $sql
+     * @param ?\stdClass $data
+     * @return array
      */
-    public function definition(): void {
-        $mform =& $this->_form;
-        $this->_customdata['compclass']->add_form_elements($mform, $this->_customdata['report']->components);
-
-        // Buttons.
-        $this->add_action_buttons(true, get_string('add'));
+    function execute_for_sql_report(string $sql, ?\stdClass $data = null): array {
+        return [$sql, []];
     }
-
 }
